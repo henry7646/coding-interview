@@ -9,63 +9,63 @@ library(lubridate)
 library(ggplot2)
 library(ggpubr)
 
-ORD <- read_csv("C:/Users/Seung Jae Han/Dropbox/±¸Á÷/Data Analyst/¸¶ÄÏÄÃ¸®_µ¥ÀÌÅÍ¾Ö³Î¸®½ºÆ®_ÀÎÅÏ_ÇÑ½ÂÀç/[¸¶ÄÏÄÃ¸®]°í°´Àü·«ÆÀ_µ¥ÀÌÅÍ¿¡³Î¸®½ºÆ®_ÀÎÅÏ_°úÁ¦ÀüÇü/1. ÁÖ¹®Á¤º¸.csv", locale=locale('ko',encoding='euc-kr'))
-COUPON <- read_csv("C:/Users/Seung Jae Han/Dropbox/±¸Á÷/Data Analyst/¸¶ÄÏÄÃ¸®_µ¥ÀÌÅÍ¾Ö³Î¸®½ºÆ®_ÀÎÅÏ_ÇÑ½ÂÀç/[¸¶ÄÏÄÃ¸®]°í°´Àü·«ÆÀ_µ¥ÀÌÅÍ¿¡³Î¸®½ºÆ®_ÀÎÅÏ_°úÁ¦ÀüÇü/2. ÄíÆùÁÖ¹®Á¤º¸.csv", locale=locale('ko',encoding='euc-kr'))
-RANK <- read_csv("C:/Users/Seung Jae Han/Dropbox/±¸Á÷/Data Analyst/¸¶ÄÏÄÃ¸®_µ¥ÀÌÅÍ¾Ö³Î¸®½ºÆ®_ÀÎÅÏ_ÇÑ½ÂÀç/[¸¶ÄÏÄÃ¸®]°í°´Àü·«ÆÀ_µ¥ÀÌÅÍ¿¡³Î¸®½ºÆ®_ÀÎÅÏ_°úÁ¦ÀüÇü/3. »óÇ°¼øÀ§.csv", locale=locale('ko',encoding='euc-kr'))
-REC <- read_csv("C:/Users/Seung Jae Han/Dropbox/±¸Á÷/Data Analyst/¸¶ÄÏÄÃ¸®_µ¥ÀÌÅÍ¾Ö³Î¸®½ºÆ®_ÀÎÅÏ_ÇÑ½ÂÀç/[¸¶ÄÏÄÃ¸®]°í°´Àü·«ÆÀ_µ¥ÀÌÅÍ¿¡³Î¸®½ºÆ®_ÀÎÅÏ_°úÁ¦ÀüÇü/4. °í°´º° ÃßÃµ»óÇ°.csv", locale=locale('ko',encoding='euc-kr'))
+ORD <- read_csv("C:/~/1. ì£¼ë¬¸ì •ë³´.csv", locale=locale('ko',encoding='euc-kr'))
+COUPON <- read_csv("C:/~/2. ì¿ í°ì£¼ë¬¸ì •ë³´.csv", locale=locale('ko',encoding='euc-kr'))
+RANK <- read_csv("C:/~/3. ìƒí’ˆìˆœìœ„.csv", locale=locale('ko',encoding='euc-kr'))
+REC <- read_csv("C:/~/4. ê³ ê°ë³„ ì¶”ì²œìƒí’ˆ.csv", locale=locale('ko',encoding='euc-kr'))
 
-#1.[1. ÁÖ¹®Á¤º¸], [2. ÄíÆùÁÖ¹®Á¤º¸] µ¥ÀÌÅÍ¸¦ È°¿ëÇÏ¿© ÀüÃ¼ °í°´ º° ¸¶Áö¸· ÁÖ¹®½Ã »ç¿ëÇÑ ÄíÆù¹øÈ£¸¦ ±¸ÇÏ´Â ÄÚµå¸¦ ÀÛ¼ºÇÏ½Ã¿À (´Ü, ÇÒÀÎÀ² 20% ÀÌÇÏ ÄíÆùÀº ¹«½Ã)
-#ÇÒÀÎÀ² °è»ê ¹æ¹ý = ÄíÆùÇÒÀÎ¾× / ÁÖ¹®±Ý¾×
-#NA´Â ÄíÆùÀ» »ç¿ëÇÏÁö ¾ÊÀº ÁÖ¹®
+#1.[1. ì£¼ë¬¸ì •ë³´], [2. ì¿ í°ì£¼ë¬¸ì •ë³´] ë°ì´í„°ë¥¼ í™œìš©í•˜ì—¬ ì „ì²´ ê³ ê° ë³„ ë§ˆì§€ë§‰ ì£¼ë¬¸ì‹œ ì‚¬ìš©í•œ ì¿ í°ë²ˆí˜¸ë¥¼ êµ¬í•˜ëŠ” ì½”ë“œë¥¼ ìž‘ì„±í•˜ì‹œì˜¤ (ë‹¨, í• ì¸ìœ¨ 20% ì´í•˜ ì¿ í°ì€ ë¬´ì‹œ)
+#í• ì¸ìœ¨ ê³„ì‚° ë°©ë²• = ì¿ í°í• ì¸ì•¡ / ì£¼ë¬¸ê¸ˆì•¡
+#NAëŠ” ì¿ í°ì„ ì‚¬ìš©í•˜ì§€ ì•Šì€ ì£¼ë¬¸
 
-##°í°´º° ÃÖÁ¾ ÁÖ¹® ÀÏ½Ã
+##ê³ ê°ë³„ ìµœì¢… ì£¼ë¬¸ ì¼ì‹œ
 last_ord_time <- ORD %>%
-  group_by(°í°´¹øÈ£) %>%
-  summarize(ÁÖ¹®ÀÏ½Ã = max(ÁÖ¹®ÀÏ½Ã))
+  group_by(ê³ ê°ë²ˆí˜¸) %>%
+  summarize(ì£¼ë¬¸ì¼ì‹œ = max(ì£¼ë¬¸ì¼ì‹œ))
 
-##ÁÖ¹®Á¤º¸¿Í ÄíÆùÁÖ¹®Á¤º¸¸¦ °áÇÕ(°øÅëÅ°: ÁÖ¹®¹øÈ£,°í°´¹øÈ£, ¹æ½Ä:left_join)
+##ì£¼ë¬¸ì •ë³´ì™€ ì¿ í°ì£¼ë¬¸ì •ë³´ë¥¼ ê²°í•©(ê³µí†µí‚¤: ì£¼ë¬¸ë²ˆí˜¸,ê³ ê°ë²ˆí˜¸, ë°©ì‹:left_join)
 ord_coupon <- ORD %>%
-  left_join(COUPON,by = c("ÁÖ¹®¹øÈ£","°í°´¹øÈ£")) %>%
-  mutate(ÇÒÀÎÀ² = ÄíÆùÇÒÀÎ¾×/ÁÖ¹®±Ý¾×) %>%
-  filter(ÇÒÀÎÀ² > 0.2 | is.na(ÇÒÀÎÀ²) == 1)
+  left_join(COUPON,by = c("ì£¼ë¬¸ë²ˆí˜¸","ê³ ê°ë²ˆí˜¸")) %>%
+  mutate(í• ì¸ìœ¨ = ì¿ í°í• ì¸ì•¡/ì£¼ë¬¸ê¸ˆì•¡) %>%
+  filter(í• ì¸ìœ¨ > 0.2 | is.na(í• ì¸ìœ¨) == 1)
 
-##°í°´º° ÃÖÁ¾ ÁÖ¹® ½Ã »ç¿ëÇÑ Äí¹ø¹øÈ£
+##ê³ ê°ë³„ ìµœì¢… ì£¼ë¬¸ ì‹œ ì‚¬ìš©í•œ ì¿ ë²ˆë²ˆí˜¸
 last_ord_coupon_no <- last_ord_time %>%
-  inner_join(ord_coupon,by = c("°í°´¹øÈ£","ÁÖ¹®ÀÏ½Ã")) %>%
-  select(°í°´¹øÈ£,»ç¿ëÄíÆù¹øÈ£) %>%
-  rename(¸¶Áö¸·ÁÖ¹®ÄíÆù = »ç¿ëÄíÆù¹øÈ£)
+  inner_join(ord_coupon,by = c("ê³ ê°ë²ˆí˜¸","ì£¼ë¬¸ì¼ì‹œ")) %>%
+  select(ê³ ê°ë²ˆí˜¸,ì‚¬ìš©ì¿ í°ë²ˆí˜¸) %>%
+  rename(ë§ˆì§€ë§‰ì£¼ë¬¸ì¿ í° = ì‚¬ìš©ì¿ í°ë²ˆí˜¸)
 
-#2. ÁÖ¾îÁø µ¥ÀÌÅÍ¸¦ È°¿ëÇÏ¿©, ´ÙÀ½°ú °°Àº Å×ÀÌºíÀ» ¸¸µå´Â ÄÚµå¸¦ ÀÛ¼ºÇÏ½Ã¿À
-#ÁÖ¾îÁø µ¥ÀÌÅÍ°¡ ÀüÃ¼ ÁÖ¹® °ÇÀÌ¶ó°í °¡Á¤ÇÑ´Ù.
-#ÁÖ¹®È¸Â÷ : µ¿ÀÏ °í°´ÀÌ ¸î ¹øÂ° ÁÖ¹® Çß´Â°¡.
-#°°Àº ³¯¿¡ 2¹ø ÀÌ»ó ±¸¸ÅÇß¾îµµ, ÁÖ¹®È¸Â÷´Â ÇÏ·ç¿¡ 1¸¸Å­¸¸ Áõ°¡ÇÑ´Ù. Áï °°Àº ³¯ ÁÖ¹®ÇÑ È¸Â÷´Â ¸ðµÎ µ¿ÀÏÇÏ°Ô Ã³¸®ÇÒ °Í.
-#ÁÖ¹®°£°Ý: µ¿ÀÏ °í°´ÀÇ Á÷Àü ÁÖ¹®°úÀÇ ÁÖ¹®ÀÏ Â÷ÀÌ
-#ÁÖ¹®°£°ÝÀÌ ¼Ò¼ö·Î ³ª¿À´Â °æ¿ì¿¡´Â ¹Ý¿Ã¸² ÇÏÁö ¸»°í ±×´ë·Î µÑ °Í.
+#2. ì£¼ì–´ì§„ ë°ì´í„°ë¥¼ í™œìš©í•˜ì—¬, ë‹¤ìŒê³¼ ê°™ì€ í…Œì´ë¸”ì„ ë§Œë“œëŠ” ì½”ë“œë¥¼ ìž‘ì„±í•˜ì‹œì˜¤
+#ì£¼ì–´ì§„ ë°ì´í„°ê°€ ì „ì²´ ì£¼ë¬¸ ê±´ì´ë¼ê³  ê°€ì •í•œë‹¤.
+#ì£¼ë¬¸íšŒì°¨ : ë™ì¼ ê³ ê°ì´ ëª‡ ë²ˆì§¸ ì£¼ë¬¸ í–ˆëŠ”ê°€.
+#ê°™ì€ ë‚ ì— 2ë²ˆ ì´ìƒ êµ¬ë§¤í–ˆì–´ë„, ì£¼ë¬¸íšŒì°¨ëŠ” í•˜ë£¨ì— 1ë§Œí¼ë§Œ ì¦ê°€í•œë‹¤. ì¦‰ ê°™ì€ ë‚  ì£¼ë¬¸í•œ íšŒì°¨ëŠ” ëª¨ë‘ ë™ì¼í•˜ê²Œ ì²˜ë¦¬í•  ê²ƒ.
+#ì£¼ë¬¸ê°„ê²©: ë™ì¼ ê³ ê°ì˜ ì§ì „ ì£¼ë¬¸ê³¼ì˜ ì£¼ë¬¸ì¼ ì°¨ì´
+#ì£¼ë¬¸ê°„ê²©ì´ ì†Œìˆ˜ë¡œ ë‚˜ì˜¤ëŠ” ê²½ìš°ì—ëŠ” ë°˜ì˜¬ë¦¼ í•˜ì§€ ë§ê³  ê·¸ëŒ€ë¡œ ë‘˜ ê²ƒ.
 
-##ÁÖ¹®Á¤º¸¿¡ ÁÖ¹®ÀÏÀÚ,ÁÖ¹®È¸Â÷,ÁÖ¹®°£°Ý Ãß°¡
+##ì£¼ë¬¸ì •ë³´ì— ì£¼ë¬¸ì¼ìž,ì£¼ë¬¸íšŒì°¨,ì£¼ë¬¸ê°„ê²© ì¶”ê°€
 ord_edit <- ORD %>%
-  mutate(ÁÖ¹®ÀÏÀÚ = date(ÁÖ¹®ÀÏ½Ã)) %>%
-  group_by(°í°´¹øÈ£) %>%
-  mutate(ÁÖ¹®È¸Â÷ = dense_rank(ÁÖ¹®ÀÏÀÚ)) %>%
-  arrange(°í°´¹øÈ£,ÁÖ¹®ÀÏ½Ã) %>%
-  group_by(°í°´¹øÈ£) %>%
-  mutate(ÁÖ¹®°£°Ý = difftime(ÁÖ¹®ÀÏ½Ã,lag(ÁÖ¹®ÀÏ½Ã,1), units = "days"))
+  mutate(ì£¼ë¬¸ì¼ìž = date(ì£¼ë¬¸ì¼ì‹œ)) %>%
+  group_by(ê³ ê°ë²ˆí˜¸) %>%
+  mutate(ì£¼ë¬¸íšŒì°¨ = dense_rank(ì£¼ë¬¸ì¼ìž)) %>%
+  arrange(ê³ ê°ë²ˆí˜¸,ì£¼ë¬¸ì¼ì‹œ) %>%
+  group_by(ê³ ê°ë²ˆí˜¸) %>%
+  mutate(ì£¼ë¬¸ê°„ê²© = difftime(ì£¼ë¬¸ì¼ì‹œ,lag(ì£¼ë¬¸ì¼ì‹œ,1), units = "days"))
 
-##ÁÖ¹®¹øÈ£,°í°´¹øÈ£,ÁÖ¹®ÀÏÀÚ,ÁÖ¹®È¸Â÷,ÁÖ¹®°£°Ý ¼±ÅÃ
+##ì£¼ë¬¸ë²ˆí˜¸,ê³ ê°ë²ˆí˜¸,ì£¼ë¬¸ì¼ìž,ì£¼ë¬¸íšŒì°¨,ì£¼ë¬¸ê°„ê²© ì„ íƒ
 ord_rank_interval <- ord_edit %>%
-  select(ÁÖ¹®¹øÈ£,°í°´¹øÈ£,ÁÖ¹®ÀÏÀÚ,ÁÖ¹®È¸Â÷,ÁÖ¹®°£°Ý)
+  select(ì£¼ë¬¸ë²ˆí˜¸,ê³ ê°ë²ˆí˜¸,ì£¼ë¬¸ì¼ìž,ì£¼ë¬¸íšŒì°¨,ì£¼ë¬¸ê°„ê²©)
 
-#3. °í°´Àü·«ÆÀ¿¡¼­´Â »óÇ° ÃßÃµ ¾Ë°í¸®ÁòÀ» È°¿ëÇÏ¿©, °í°´µé¿¡°Ô PUSH Ä·ÆäÀÎÀ» ÁøÇàÇÑ´Ù.
-#°í°´´ç ÃÑ 5°³ÀÇ »óÇ°À» ÃßÃµÇØÁÖ´Âµ¥, ¾Ë°í¸®Áò¿¡ 5°³ÀÇ »óÇ°ÀÌ ´Ù ¸ÅÄªµÇÁö ¾Ê´Â °æ¿ì¿¡´Â NA°¡ ½×ÀÎ´Ù.
-#ÀÌ °æ¿ì¿¡´Â ÆÀ ³»ºÎ¿¡¼­ Á¤ÇÑ »óÇ° ¼øÀ§¸¦ ¹ÙÅÁÀ¸·Î, ³ôÀº ¼øÀ§¿¡ rankµÇ¾î ÀÖ´Â »óÇ°À» ´ëÃ¼ ÃßÃµÇØÁØ´Ù.
-#[3. »óÇ° ¼øÀ§] µ¥ÀÌÅÍ¸¦ È°¿ëÇÏ¿©, [4. °í°´º° ÃßÃµ»óÇ°] µ¥ÀÌÅÍÀÇ NA¸¦ ¸ðµÎ Ã¤¿ì´Â ÄÚµå¸¦ ÀÛ¼ºÇÏ½Ã¿À.
-#´Ü, °í°´º°·Î µ¿ÀÏÇÑ »óÇ°À» 2¹ø ÀÌ»ó ÃßÃµÇØ¼­´Â ¾ÈµÊ.
+#3. ê³ ê°ì „ëžµíŒ€ì—ì„œëŠ” ìƒí’ˆ ì¶”ì²œ ì•Œê³ ë¦¬ì¦˜ì„ í™œìš©í•˜ì—¬, ê³ ê°ë“¤ì—ê²Œ PUSH ìº íŽ˜ì¸ì„ ì§„í–‰í•œë‹¤.
+#ê³ ê°ë‹¹ ì´ 5ê°œì˜ ìƒí’ˆì„ ì¶”ì²œí•´ì£¼ëŠ”ë°, ì•Œê³ ë¦¬ì¦˜ì— 5ê°œì˜ ìƒí’ˆì´ ë‹¤ ë§¤ì¹­ë˜ì§€ ì•ŠëŠ” ê²½ìš°ì—ëŠ” NAê°€ ìŒ“ì¸ë‹¤.
+#ì´ ê²½ìš°ì—ëŠ” íŒ€ ë‚´ë¶€ì—ì„œ ì •í•œ ìƒí’ˆ ìˆœìœ„ë¥¼ ë°”íƒ•ìœ¼ë¡œ, ë†’ì€ ìˆœìœ„ì— rankë˜ì–´ ìžˆëŠ” ìƒí’ˆì„ ëŒ€ì²´ ì¶”ì²œí•´ì¤€ë‹¤.
+#[3. ìƒí’ˆ ìˆœìœ„] ë°ì´í„°ë¥¼ í™œìš©í•˜ì—¬, [4. ê³ ê°ë³„ ì¶”ì²œìƒí’ˆ] ë°ì´í„°ì˜ NAë¥¼ ëª¨ë‘ ì±„ìš°ëŠ” ì½”ë“œë¥¼ ìž‘ì„±í•˜ì‹œì˜¤.
+#ë‹¨, ê³ ê°ë³„ë¡œ ë™ì¼í•œ ìƒí’ˆì„ 2ë²ˆ ì´ìƒ ì¶”ì²œí•´ì„œëŠ” ì•ˆë¨.
 
 for(i in 1:nrow(REC)){
   if(any(is.na(REC[i,]))==TRUE){
     j<-1
     while(j<=length(which(is.na(REC[i,])))){
-      REC[i,which(is.na(REC[i,]))[j]]=RANK$»óÇ°¹øÈ£[j]
+      REC[i,which(is.na(REC[i,]))[j]]=RANK$ìƒí’ˆë²ˆí˜¸[j]
       j=j+1
     }
   }
@@ -75,39 +75,39 @@ for(i in 1:nrow(REC)){
 }
   
 #4.
-#(1) ÃÖ±Ù 7ÀÏÄ¡ÀÇ ÁÖ¹® µ¥ÀÌÅÍ¸¦ ÃßÃâÇÏ¿©, 0½ÃºÎÅÍ 24½Ã±îÁö 1½Ã°£ ´ÜÀ§·Î ³ª´« ½Ã°£´ëº° ´©Àû ¸ÅÃâÀ» Â÷Æ®È­ ÇÏ½Ã¿À
-#(2) ÃÖ±Ù 7ÀÏÄ¡ÀÇ ÁÖ¹® µ¥ÀÌÅÍ¸¦ ÃßÃâÇÏ¿©, 0½ÃºÎÅÍ 24½Ã±îÁö 1½Ã°£ ´ÜÀ§·Î ³ª´« ½Ã°£´ëº° ¸ÅÃâÀ» Â÷Æ®È­ ÇÏ½Ã¿À
+#(1) ìµœê·¼ 7ì¼ì¹˜ì˜ ì£¼ë¬¸ ë°ì´í„°ë¥¼ ì¶”ì¶œí•˜ì—¬, 0ì‹œë¶€í„° 24ì‹œê¹Œì§€ 1ì‹œê°„ ë‹¨ìœ„ë¡œ ë‚˜ëˆˆ ì‹œê°„ëŒ€ë³„ ëˆ„ì  ë§¤ì¶œì„ ì°¨íŠ¸í™” í•˜ì‹œì˜¤
+#(2) ìµœê·¼ 7ì¼ì¹˜ì˜ ì£¼ë¬¸ ë°ì´í„°ë¥¼ ì¶”ì¶œí•˜ì—¬, 0ì‹œë¶€í„° 24ì‹œê¹Œì§€ 1ì‹œê°„ ë‹¨ìœ„ë¡œ ë‚˜ëˆˆ ì‹œê°„ëŒ€ë³„ ë§¤ì¶œì„ ì°¨íŠ¸í™” í•˜ì‹œì˜¤
 
-##ÁÖ¹®Á¤º¸¿Í ÄíÆùÁÖ¹®Á¤º¸¸¦ °áÇÕ(°øÅëÅ°: ÁÖ¹®¹øÈ£,°í°´¹øÈ£, ¹æ½Ä:left_join)
-##ÃÖ±Ù 7ÀÏÄ¡ÀÇ µ¥ÀÌÅÍ¸¸ ÃßÃâ
+##ì£¼ë¬¸ì •ë³´ì™€ ì¿ í°ì£¼ë¬¸ì •ë³´ë¥¼ ê²°í•©(ê³µí†µí‚¤: ì£¼ë¬¸ë²ˆí˜¸,ê³ ê°ë²ˆí˜¸, ë°©ì‹:left_join)
+##ìµœê·¼ 7ì¼ì¹˜ì˜ ë°ì´í„°ë§Œ ì¶”ì¶œ
 ord_coupon2 <- ORD %>%
-  left_join(COUPON,by = c("ÁÖ¹®¹øÈ£","°í°´¹øÈ£")) %>%
-  mutate(ÇÒÀÎÀ² = ifelse(is.na(ÄíÆùÇÒÀÎ¾×/ÁÖ¹®±Ý¾×) == 1, 0, ÄíÆùÇÒÀÎ¾×/ÁÖ¹®±Ý¾×)) %>%
-  filter(ÁÖ¹®ÀÏ½Ã >= ymd_hms("2019-12-28 00:00:00")) %>%
-  mutate(ÆÇ¸Å¾× = ÁÖ¹®±Ý¾×*(1-ÇÒÀÎÀ²), ³¯Â¥ = as.factor(date(ÁÖ¹®ÀÏ½Ã)), ½Ã°£´ë = hour(ÁÖ¹®ÀÏ½Ã))
+  left_join(COUPON,by = c("ì£¼ë¬¸ë²ˆí˜¸","ê³ ê°ë²ˆí˜¸")) %>%
+  mutate(í• ì¸ìœ¨ = ifelse(is.na(ì¿ í°í• ì¸ì•¡/ì£¼ë¬¸ê¸ˆì•¡) == 1, 0, ì¿ í°í• ì¸ì•¡/ì£¼ë¬¸ê¸ˆì•¡)) %>%
+  filter(ì£¼ë¬¸ì¼ì‹œ >= ymd_hms("2019-12-28 00:00:00")) %>%
+  mutate(íŒë§¤ì•¡ = ì£¼ë¬¸ê¸ˆì•¡*(1-í• ì¸ìœ¨), ë‚ ì§œ = as.factor(date(ì£¼ë¬¸ì¼ì‹œ)), ì‹œê°„ëŒ€ = hour(ì£¼ë¬¸ì¼ì‹œ))
 
-##ÃÖ±Ù 7ÀÏ°£ ³¯Â¥,½Ã°£´ëº° ¸ÅÃâ ¹× ´©Àû¸ÅÃâ
+##ìµœê·¼ 7ì¼ê°„ ë‚ ì§œ,ì‹œê°„ëŒ€ë³„ ë§¤ì¶œ ë° ëˆ„ì ë§¤ì¶œ
 hourly_profit <- ord_coupon2 %>%
-  group_by(³¯Â¥,½Ã°£´ë) %>%
-  summarize(½Ã°£´ëº°¸ÅÃâ = sum(ÆÇ¸Å¾×)) %>%
-  group_by(³¯Â¥) %>%
-  mutate(½Ã°£´ëº°´©Àû¸ÅÃâ = cumsum(½Ã°£´ëº°¸ÅÃâ))
+  group_by(ë‚ ì§œ,ì‹œê°„ëŒ€) %>%
+  summarize(ì‹œê°„ëŒ€ë³„ë§¤ì¶œ = sum(íŒë§¤ì•¡)) %>%
+  group_by(ë‚ ì§œ) %>%
+  mutate(ì‹œê°„ëŒ€ë³„ëˆ„ì ë§¤ì¶œ = cumsum(ì‹œê°„ëŒ€ë³„ë§¤ì¶œ))
 
-##ÃÖ±Ù 7ÀÏ°£ ½Ã°£´ëº° ¸ÅÃâ ÃßÀÌ Â÷Æ®
+##ìµœê·¼ 7ì¼ê°„ ì‹œê°„ëŒ€ë³„ ë§¤ì¶œ ì¶”ì´ ì°¨íŠ¸
 hourly_profit_trend <- hourly_profit %>%
-  ggplot(aes(½Ã°£´ë, ½Ã°£´ëº°¸ÅÃâ, color = ³¯Â¥)) +
+  ggplot(aes(ì‹œê°„ëŒ€, ì‹œê°„ëŒ€ë³„ë§¤ì¶œ, color = ë‚ ì§œ)) +
   geom_line() +
   scale_x_continuous(limits = c(0,24), breaks = seq(0,24,1), expand = c(0,0)) +
-  ggtitle("½Ã°£´ëº° ¸ÅÃâ")
+  ggtitle("ì‹œê°„ëŒ€ë³„ ë§¤ì¶œ")
 
-##ÃÖ±Ù 7ÀÏ°£ ½Ã°£´ëº° ´©Àû¸ÅÃâ ÃßÀÌ Â÷Æ®  
+##ìµœê·¼ 7ì¼ê°„ ì‹œê°„ëŒ€ë³„ ëˆ„ì ë§¤ì¶œ ì¶”ì´ ì°¨íŠ¸  
 hourly_cumulative_profit_trend <- hourly_profit %>%
-  ggplot(aes(½Ã°£´ë, ½Ã°£´ëº°´©Àû¸ÅÃâ, color = ³¯Â¥)) +
+  ggplot(aes(ì‹œê°„ëŒ€, ì‹œê°„ëŒ€ë³„ëˆ„ì ë§¤ì¶œ, color = ë‚ ì§œ)) +
   geom_line() +
   scale_x_continuous(limits = c(0,24), breaks = seq(0,24,1), expand = c(0,0)) +
-  ggtitle("½Ã°£´ëº° ´©Àû¸ÅÃâ")
+  ggtitle("ì‹œê°„ëŒ€ë³„ ëˆ„ì ë§¤ì¶œ")
 
-##µÎ ±×·¡ÇÁ °áÇÕ
+##ë‘ ê·¸ëž˜í”„ ê²°í•©
 recent_week_profit_trend <-
   ggarrange(hourly_profit_trend, hourly_cumulative_profit_trend, ncol = 1, nrow = 2, heights = c(2,2), align = "v") %>%
-  annotate_figure(top = text_grob("ÃÖ±Ù 7ÀÏ°£ ½Ã°£´ëº° ¸ÅÃâ ±â·Ï (2019-12-28 ~ 2020-01-03)",face = "bold", size = 14))
+  annotate_figure(top = text_grob("ìµœê·¼ 7ì¼ê°„ ì‹œê°„ëŒ€ë³„ ë§¤ì¶œ ê¸°ë¡ (2019-12-28 ~ 2020-01-03)",face = "bold", size = 14))
