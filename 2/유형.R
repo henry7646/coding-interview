@@ -1,17 +1,16 @@
 getwd()
-setwd("C:/R/Market Kurly")
 rm(list = ls())
 library(data.table)
 library(dplyr)
 library(bit64)
 
-#ÇöÀç °æ·Î¿¡¼­ data.table ÆĞÅ°ÁöÀÇ fread ÇÔ¼ö·Î ¿ÜºÎ csv ÆÄÀÏ ºÒ·¯¿À±â
-#ÁÖ¹®ÀÏÀÚº° Æò±Õ¸ÅÃâ ±¸ÇÏ±â
-#"ÁÖ¹®ÀÏÀÚ:Æò±Õ¸ÅÃâ" Ä®·³ (¹®ÀÚ¿­) »ı¼º
-daily_profit <- fread("1. ÁÖ¹®Á¤º¸.csv", stringsAsFactors = FALSE, encoding = "UTF-8") %>%
-  mutate(ÁÖ¹®ÀÏÀÚ = as.Date(ÁÖ¹®ÀÏ½Ã)) %>%
-  group_by(ÁÖ¹®ÀÏÀÚ) %>%
-  summarize(Æò±Õ¸ÅÃâ = mean(ÁÖ¹®±İ¾×))
+#í˜„ì¬ ê²½ë¡œì—ì„œ data.table íŒ¨í‚¤ì§€ì˜ fread í•¨ìˆ˜ë¡œ ì™¸ë¶€ csv íŒŒì¼ ë¶ˆëŸ¬ì˜¤ê¸°
+#ì£¼ë¬¸ì¼ìë³„ í‰ê· ë§¤ì¶œ êµ¬í•˜ê¸°
+#"ì£¼ë¬¸ì¼ì:í‰ê· ë§¤ì¶œ" ì¹¼ëŸ¼ (ë¬¸ìì—´) ìƒì„±
+daily_profit <- fread("1. ì£¼ë¬¸ì •ë³´.csv", stringsAsFactors = FALSE, encoding = "UTF-8") %>%
+  mutate(ì£¼ë¬¸ì¼ì = as.Date(ì£¼ë¬¸ì¼ì‹œ)) %>%
+  group_by(ì£¼ë¬¸ì¼ì) %>%
+  summarize(í‰ê· ë§¤ì¶œ = mean(ì£¼ë¬¸ê¸ˆì•¡))
 
 Daily_average_profit <-
-  paste(daily_profit$ÁÖ¹®ÀÏÀÚ, daily_profit$Æò±Õ¸ÅÃâ, sep = ": ")
+  paste(daily_profit$ì£¼ë¬¸ì¼ì, daily_profit$í‰ê· ë§¤ì¶œ, sep = ": ")
